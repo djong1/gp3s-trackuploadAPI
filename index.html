@@ -1,0 +1,114 @@
+<!doctype html>
+ <html lang="en">
+ <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+ 	 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+ 	 <script type="text/javascript" src="https://alcdn.msauth.net/browser/2.11.1/js/msal-browser.min.js"></script>
+ </head>
+ <body>
+      <div class="container-fluid">
+          <div class="row">
+              <div class="col-md-12">
+ 				<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+ 					<div class="container-fluid">
+ 						<a class="navbar-brand" href="#">Azure Active Directory B2C with Azure API Management</a>
+ 						<div class="navbar-nav">
+ 							<button class="btn btn-success" id="signinbtn"  onClick="login()">Sign In</a>
+ 						</div>
+ 					</div>
+ 				</nav>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-md-12">
+                  <div class="card" >
+ 					<div id="cardheader" class="card-header">
+ 						<div class="card-text"id="message">Please sign in to continue</div>
+ 					</div>
+ 					<div class="card-body">
+ 						<button class="btn btn-warning" id="callapibtn" onClick="getAPIData()">Call API</a>
+ 						<div id="progress" class="spinner-border" role="status">
+ 							<span class="visually-hidden">Loading...</span>
+ 						</div>
+ 					</div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <script lang="javascript">
+     		// Just change the values in this config object ONLY.
+     		var config = {
+     			msal: {
+     				auth: {
+     					clientId: "{CLIENTID}", // This is the client ID of your FRONTEND application that you registered with the SPA type in Azure Active Directory B2C
+     					authority:  "{YOURAUTHORITYB2C}", // Formatted as https://{b2ctenantname}.b2clogin.com/tfp/{b2ctenantguid or full tenant name including onmicrosoft.com}/{signuporinpolicyname}
+     					redirectUri: "{StoragePrimaryEndpoint}", // The storage hosting address of the SPA, a web-enabled v2 storage account - recorded earlier as the Primary Endpoint.
+     					knownAuthorities: ["{B2CTENANTDOMAIN}"] // {b2ctenantname}.b2clogin.com
+     				},
+     				cache: {
+     					cacheLocation: "sessionStorage",
+     					storeAuthStateInCookie: false 
+     				}
+     			},
+     			api: {
+     				scopes: ["{BACKENDAPISCOPE}"], // The scope that we request for the API from B2C, this should be the backend API scope, with the full URI.
+     				backend: "{APIBASEURL}/hello" // The location that we will call for the backend api, this should be hosted in API Management, suffixed with the name of the API operation (in the sample this is '/hello').
+     			}
+     		}
+     		document.getElementById("callapibtn").hidden = true;
+     		document.getElementById("progress").hidden = true;
+     		const myMSALObj = new msal.PublicClientApplication(config.msal);
+     		myMSALObj.handleRedirectPromise().then((tokenResponse) => {
+     			if(tokenResponse !== null){
+     				console.log(tokenResponse.account);
+     				document.getElementById("message").innerHTML = "Welcome, " + tokenResponse.account.name;
+     				document.getElementById("signinbtn").hidden = true;
+     				document.getElementById("callapibtn").hidden = false;
+     			}}).catch((error) => {console.log("Error Signing in:" + error);
+     		});
+     		function login() {
+     			try {
+     				myMSALObj.loginRedirect({scopes: config.api.scopes});
+     			} catch (err) {console.log(err);}
+     		}
+     		function getAPIData() {
+     			document.getElementById("progress").hidden = false; 
+     			document.getElementById("message").innerHTML = "Calling backend ... "
+     			document.getElementById("cardheader").classList.remove('bg-success','bg-warning','bg-danger');
+     			myMSALObj.acquireTokenSilent({scopes: config.api.scopes, account: getAccount()}).then(tokenResponse => {
+     				const headers = new Headers();
+     				headers.append("Authorization", `Bearer ${tokenResponse.accessToken}`);
+     				fetch(config.api.backend, {method: "GET", headers: headers})
+     					.then(async (response)  => {
+     						if (!response.ok)
+     						{
+     							document.getElementById("message").innerHTML = "Error: " + response.status + " " + JSON.parse(await response.text()).message;
+     							document.getElementById("cardheader").classList.add('bg-warning');
+     						}
+     						else
+     						{
+     							document.getElementById("cardheader").classList.add('bg-success');
+     							document.getElementById("message").innerHTML = await response.text();
+     						}
+     						}).catch(async (error) => {
+     							document.getElementById("cardheader").classList.add('bg-danger');
+     							document.getElementById("message").innerHTML = "Error: " + error;
+     						});
+     			}).catch(error => {console.log("Error Acquiring Token Silently: " + error);
+     			    return myMSALObj.acquireTokenRedirect({scopes: config.api.scopes, forceRefresh: false})
+     			});
+     			document.getElementById("progress").hidden = true;
+          }
+         function getAccount() {
+             var accounts = myMSALObj.getAllAccounts();
+             if (!accounts || accounts.length === 0) {
+                 return null;
+             } else {
+                 return accounts[0];
+             }
+         }
+     </script>
+  </body>
+ </html>
