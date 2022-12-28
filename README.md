@@ -1,4 +1,4 @@
-# gp3s-trackuploadAPI
+# Gp3s track upload API
 
 Application developers can use the track upload API to upload track files directly from a device of application to the GPS websites. We use Oauth/Oidc authentication on the API. So the service to service communication will use the Gp3s users access token to authenticate on behalve of the GP3S user. 
 
@@ -45,13 +45,28 @@ If you do not have your application up and running please use the code provided 
 
 
 
-#Calling the Track Upload API
+# Calling the Track Upload API #
 
-- make sure you are registered as developer and allowed, go to https://apimgp3s.portal.azure-api.net/ to register with your gps-speedsurfing account
-- register for the GP3S professional products
-- Go to the Track-upload api to explore, you cannot test the api from this portal (file upload is blocked)
-- The API url: https://apimgp3s.azure-api.net/track-upload/Gp3s_upload_rawtrack
-- Provide the file in the body as form-data
-- Provide the filename in the body as form-data
+1. make sure you are registered as developer, go to https://apimgp3s.portal.azure-api.net/ to register with your gps-speedsurfing account
+2. register for the GP3S professional products
+3. Go to the Track-upload api to explore, you cannot test the api from this portal (file upload is blocked)
+4. The API url: [https://apimgp3s.azure-api.net/track-upload/Gp3s_upload_rawtrack](https://apimgp3s.azure-api.net/track-upload/upload_rawtrack)
+5. Provide the file in the body as form-data
+6. Provide additional headers:
+   - Ocp-Apim-Subscription-Key {you can get this from the Api portal when you have signed up for GP3S professional product}
+   - Authorization {token}
+8. Provide additional information in the body as form-data
+   - filename {name of the file uploaded}
+   - provider {application name}
+   - filetype {fit,gpx,sbn,oao}
+
+## You can test with postman:
+
+Get an access token:
+![postman get token](https://gp3scdnstorage.blob.core.windows.net/gp3s/cdn/img/postman-get-accesstoken.png)
+
+Call the API with the access token:
+![postman get token](https://gp3scdnstorage.blob.core.windows.net/gp3s/cdn/img/postman-call-api.png)
+
 
 
