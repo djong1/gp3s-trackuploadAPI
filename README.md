@@ -74,4 +74,104 @@ Call the API with the access token:
 ![postman get token](https://gp3scdnstorage.blob.core.windows.net/gp3s/cdn/img/postman-call-api.png)
 
 
+# Authentication and Authorization process for flow 2:
+
+Gp3s open platform is based on OAuth 2.0 protocol. The Authorization process consists of 4 parts. 
+1. Guide the user to the authorization page to agree to the authorization and obtain the token
+2. The accessToken is valid for 1 day by default. If necessary, the developer can refresh the authorized accessToken to avoid expiration.
+3. Use accessToken for available API.
+
+
+## Information provided to get startted with Authentication ##
+
+### Information needed ###
+
+Please sent us a request with detailed info to begin the API request reviewing process.
+
+1. Company Name
+2. Company URL
+3. Application Name
+4. Application Logo (200 px by 200 px)
+5. Application Description (Limit 100 characters)
+6. Authorized Callback Domain (redirect_uri), provide one or more
+
+### You will get back ###
+
+After reviewing we get back to you with the ClientID and the scope that you should use in your application to call the API. This information will be limitted to the explicith use of the upload api for tracks.
+
+1. ClientId: The Client Id of your Client application registered in Gp3s App Registrations. This is typically a GUID value.
+2. Secret: The secret for your client application (store this in a safe place), the secret is rolledover between fixed time windows
+3. Scope: The scope configured by us for your Client application.
+4. ScopeURI: The scope uri like https://gpsspeedsurfingb2c.onmicrosoft.com/<guid>/.default
+5. Access Token url: a url to call to get a new access token
+
+## Step 1: Get an access token for flow 2 ##
+
+The access tokens are valid for 24 hours and after 24 hours you have to request a new one
+
+Then, use your favorite API development application to generate an authorization request. Construct a call like this example with the following information as the body of the POST request:
+https://<tenant-name>.b2clogin.com/<tenant-name>.onmicrosoft.com/<policy>/oauth2/v2.0/token
+
+Replace this url with the one you get back from us (4), provide the following parameters:
+
+| Key  | Value |
+| ------------- | ------------- |
+| grant_type  | client_credentials  |
+| client_id  | The Client ID from (1)  |
+| client_secret  | The Client Secret from (2)  |
+| scope  | The scope url (4)  |
+
+
+The actual POST request looks like the following example:
+
+```html
+
+POST /<5>
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=client_credentials&client_id=33333333-0000-0000-0000-000000000000&client_secret=FyX7Q~DuPJ...&scope=https%3A%2F%2Fcontoso.onmicrosoft.com%2Fapi%2F.default
+
+```
+or:
+
+```bash
+curl --location --request POST '<5>' \
+--header 'Content-Type: application/x-www-form-urlencoded' \
+--form 'grant_type="client_credentials"' \
+--form 'client_id="<1>"' \
+--form 'client_secret="<2>"' \
+--form 'scope="<4>"'
+```
+
+## Step 2: Calling the Track Upload API for flow 2 ##
+
+1. make sure you are registered as developer, go to https://apimgp3s.portal.azure-api.net/ to register with your gps-speedsurfing account
+2. register for the GP3S professional products
+3. Go to the Track-upload api to explore, you cannot test the api from this portal (file upload is blocked)
+4. The API url: [https://apimgp3s.azure-api.net/track-upload-ccf/Gp3s_upload_rawtrack](https://apimgp3s.azure-api.net/track-upload-ccf/upload_rawtrack)
+5. Provide the file in the body as form-data
+6. Provide additional headers:
+   - Ocp-Apim-Subscription-Key {you can get this from the Api portal when you have signed up for GP3S professional product}
+   - Authorization {access token from the previous step}
+8. Provide additional information in the body as form-data
+   - filename {name of the file uploaded}
+   - provider {application name}
+   - filetype {fit,gpx,sbn,oao}
+   - userobjectid {id of gp3s user}
+   - useremail {email of gp3s user}
+   - sportstype {1 to 10}
+
+```bash
+curl --location --request POST '<https://apimgp3s.azure-api.net/track-upload-ccf/upload_rawtrack>' \
+--header 'Content-Type: application/x-www-form-urlencoded' \
+--header 'Ocp-Apim-Subscription-Key: <key from api portal>' \
+--header 'Authorization: <access token from the previous step>' \
+--form 'filename="file1"' \
+--form 'file="<the actual file>"' \
+--form 'filetype="<gpx>"' \
+--form 'userobjectid="<1234>"'
+--form 'useremail="<test@test.com>"'
+--form 'sportstype=3'
+```
+you can do all actions via postman or other tool of your choice
 
