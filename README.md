@@ -1,9 +1,11 @@
 # Gp3s track upload API
 
-Application developers can use the track upload API to upload track files directly from a device of application to the GPS websites. We use Oauth/Oidc authentication on the API. So the service to service communication will use the Gp3s users access token to authenticate on behalve of the GP3S user. 
+Application developers can use the track upload API to upload track files directly from a device or (back-end) application to the GPS websites. We use Oauth/Oidc authentication on the API. We provide 2 flavours:
+1. App/user to API pattern (flow 1): this is the so called ...... flow, typacally used when you have an app and whants to upload the track on behalf of the user. So the service to service communication will use the Gp3s users access token to authenticate on behalve of the GP3S user when uploading the track. The user is once or every time challenged with a user login (popup) to provide it's GP3S user credentials.
+2. Server to API pattern (flow 2): this is the so called Client Credential Granth Flow, typically used when you have a backend server that will upload the tracks to the website on behalve of the user. So the server to API communication will not the Gp3s users access token to authenticate on behalve of the GP3S user, but uses a provided client credential and secret. 
 
 
-#Authentication and Authorization process:
+#Authentication and Authorization process for App/user to API pattern (flow 1):
 
 Gp3s open platform is based on OAuth 2.0 protocol. The Authorization process consists of 4 parts. 
 1. Guide the user to the authorization page to agree to the authorization and obtain the token
