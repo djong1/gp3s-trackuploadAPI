@@ -2,7 +2,11 @@
 
 Application developers can use the track upload API to upload track files directly from a device or (back-end) application to the GPS websites. We use Oauth/Oidc authentication on the API. We provide 2 flavours:
 1. App/user to API pattern (flow 1): this is the so called implicit flow, typically used when you have an app and wants to upload the track on behalf of the user. So the service to service communication will use the Gp3s users access token to authenticate on behalf of the GP3S user when uploading the track. The user is once or every time challenged with a user login (popup) to provide it's GP3S user credentials.
+   ![image](https://github.com/djong1/gp3s-trackuploadAPI/assets/25177991/c56abfd0-58cf-4c92-be50-8a2d50e1637f)
+
+   
 2. Server to API pattern (flow 2): this is the so called Client Credential Granth Flow, typically used when you have a backend server that will upload the tracks to the website on behalf of the user. So the server to API communication will not the Gp3s users access token to authenticate on behalf of the GP3S user, but uses a provided client credential and secret. 
+   ![image](https://github.com/djong1/gp3s-trackuploadAPI/assets/25177991/23835190-06ce-4bdb-b49b-2091be14db71)
 
 
 # Authentication and Authorization process for flow 1:
