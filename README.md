@@ -5,7 +5,7 @@ Application developers can use the track upload API to upload track files direct
 2. Server to API pattern (flow 2): this is the so called Client Credential Granth Flow, typically used when you have a backend server that will upload the tracks to the website on behalve of the user. So the server to API communication will not the Gp3s users access token to authenticate on behalve of the GP3S user, but uses a provided client credential and secret. 
 
 
-#Authentication and Authorization process for App/user to API pattern (flow 1):
+# Authentication and Authorization process for App/user to API pattern (flow 1):
 
 Gp3s open platform is based on OAuth 2.0 protocol. The Authorization process consists of 4 parts. 
 1. Guide the user to the authorization page to agree to the authorization and obtain the token
