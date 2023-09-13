@@ -65,6 +65,9 @@ If you do not have your application up and running please use the code provided 
 Get an access token:
 ![postman get token](https://gp3scdnstorage.blob.core.windows.net/gp3s/cdn/img/postman-get-accesstoken.png)
 
+Click "Get New Access Token", a browser popup will appear where you have to provide the gp3s user credetials, once completed the access token will return.
+You can now use the access token to upload a track.
+
 Call the API with the access token:
 ![postman get token](https://gp3scdnstorage.blob.core.windows.net/gp3s/cdn/img/postman-call-api.png)
 
