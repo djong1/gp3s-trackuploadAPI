@@ -1,19 +1,19 @@
 # Gp3s track upload API
 
 Application developers can use the track upload API to upload track files directly from a device or (back-end) application to the GPS websites. We use Oauth/Oidc authentication on the API. We provide 2 flavours:
-1. App/user to API pattern (flow 1): this is the so called ...... flow, typacally used when you have an app and whants to upload the track on behalf of the user. So the service to service communication will use the Gp3s users access token to authenticate on behalve of the GP3S user when uploading the track. The user is once or every time challenged with a user login (popup) to provide it's GP3S user credentials.
-2. Server to API pattern (flow 2): this is the so called Client Credential Granth Flow, typically used when you have a backend server that will upload the tracks to the website on behalve of the user. So the server to API communication will not the Gp3s users access token to authenticate on behalve of the GP3S user, but uses a provided client credential and secret. 
+1. App/user to API pattern (flow 1): this is the so called implicit flow, typically used when you have an app and wants to upload the track on behalf of the user. So the service to service communication will use the Gp3s users access token to authenticate on behalf of the GP3S user when uploading the track. The user is once or every time challenged with a user login (popup) to provide it's GP3S user credentials.
+2. Server to API pattern (flow 2): this is the so called Client Credential Granth Flow, typically used when you have a backend server that will upload the tracks to the website on behalf of the user. So the server to API communication will not the Gp3s users access token to authenticate on behalf of the GP3S user, but uses a provided client credential and secret. 
 
 
 # Authentication and Authorization process for flow 1:
 
 Gp3s open platform is based on OAuth 2.0 protocol. The Authorization process consists of 4 parts. 
 1. Guide the user to the authorization page to agree to the authorization and obtain the token
-2. The accessToken is valid for 1 day by default. If necessary, the developer can refresh the authorized accessToken to avoid expiration.
-3. Use accessToken for upload API to upload track.
+2. The access token is valid for 1 day by default. If necessary, the developer can refresh the authorized access token to avoid expiration.
+3. Use access token for upload API to upload track.
 
 
-## Information provided to get startted with Authentication ##
+## Information provided to get started with Authentication ##
 
 ### Information needed ###
 
@@ -28,7 +28,7 @@ Please sent us a request with detailed info to begin the API request reviewing p
 
 ### You will get back ###
 
-After reviewing we get back to you with the ClientID and the scope that you should use in your application to call the API. This information will be limitted to the explicith use of the upload api for tracks.
+After reviewing we get back to you with the ClientID and the scope that you should use in your application to call the API. This information will be  limited to the explicit use of the upload api for tracks.
 
 1. ClientId: The Client Id of your Client application registered in Gp3s App Registrations. This is typically a GUID value.
 2. Scope: The scope configured by us for your Client application.
@@ -51,7 +51,7 @@ If you do not have your application up and running please use the code provided 
 
 Get an access token:
 ![postman get token](https://gp3scdnstorage.blob.core.windows.net/gp3s/cdn/img/postman-get-accesstoken.png)
-Click "Get New Access Token", a browser popup will appear where you have to provide the gp3s user credetials, once completed the access token will return.
+Click "Get New Access Token", a browser popup will appear where you have to provide the gp3s user credentials, once completed the access token will return.
 You can now use the access token to upload a track.
 
 ## step 2: Calling the Track Upload API ##
@@ -91,25 +91,25 @@ Call the API with the access token:
 
 Gp3s API platform is based on OAuth 2.0 protocol. The process consists of 4 parts. 
 
-1. Enable track upload on behalve of the user (once)
-   - to be able to upload tracks on behalve of the user, we need to get the users concent to do this. In flow 2 we do this only once and therefore you collect and store the attributes which are needed when you upload tracks.
+1. Enable track upload on behalf of the user (once)
+   - to be able to upload tracks on behalf of the user, we need to get the users concent to do this. In flow 2 we do this only once and therefore you collect and store the attributes which are needed when you upload tracks.
      - call the registration api
      - the user needs to login with the GP3S credentials
      - the flow will return an access token with the user-emails and user oid claims
      - store this information in your app in a secure way
 2. Get an access token 
-   - call the IDP to request an access token on behalve of your app
+   - call the IDP to request an access token on behalf of your app
 3. Upload track 
    - use the acces token from previous step (24 hours valid)
    - enrich the call with the user attributes stored
    - call the upload track API
-4. Stop sync on behalve of the user (once)
-   - to be able to stop uploading tracks on behalve of the user, we need to get notified to withdraw the user consent to upload tracks from your platform
+4. Stop sync on behalf of the user (once)
+   - to be able to stop uploading tracks on behalf of the user, we need to get notified to withdraw the user consent to upload tracks from your platform
      - call the de-registration api
      - the user needs to login with the GP3S credentials
      - delete the GP3S information for this user
        
-## Information provided to get startted with Authentication ##
+## Information provided to get  startedwith Authentication ##
 
 ### Information needed ###
 
@@ -124,7 +124,7 @@ Please sent us a request with detailed info to begin the API request reviewing p
 
 ### You will get back ###
 
-After reviewing we get back to you with the ClientID and the scope that you should use in your application to call the API. This information will be limitted to the explicith use of the upload api for tracks.
+After reviewing we get back to you with the ClientID and the scope that you should use in your application to call the API. This information will be  limited to the explicit use of the upload api for tracks.
 
 1. ClientId: The Client Id of your Client application registered in Gp3s App Registrations. This is typically a GUID value.
 2. Secret: The secret for your client application (store this in a safe place), the secret is rolledover between fixed time windows
@@ -133,9 +133,9 @@ After reviewing we get back to you with the ClientID and the scope that you shou
 5. Access Token url: a url to call to get a new access token
 6. Authorized Callback Domain (redirect_uri)
 
-## Step 1: Enable track upload on behalve of the user for flow 2 ##
+## Step 1: Enable track upload on behalf of the user for flow 2 ##
 
-To be able to upload tracks on behalve of the user, we need to get the users concent to do this. In flow 2 we do this only once and therefore you have to collect and store the attributes in your backend or app which are needed when you upload tracks.
+To be able to upload tracks on behalf of the user, we need to get the users concent to do this. In flow 2 we do this only once and therefore you have to collect and store the attributes in your backend or app which are needed when you upload tracks.
 
 ```html
 GET https://gpsspeedsurfingb2c.b2clogin.com/gpsspeedsurfingb2c.onmicrosoft.com/oauth2/v2.0/authorize?p=B2C_1_signin
@@ -151,7 +151,7 @@ client_id=<1>
 ```
 or use Postman to get an access token:
 ![postman get token](https://gp3scdnstorage.blob.core.windows.net/gp3s/cdn/img/postman-get-accesstoken.png)
-Click "Get New Access Token", a browser popup will appear where you have to provide the gp3s user credetials, once completed the access token will return.
+Click "Get New Access Token", a browser popup will appear where you have to provide the gp3s user credentials, once completed the access token will return.
 You can now use the access token to upload a track.
 
 extract the claims from the access token and store these: "oid" and "emails"
