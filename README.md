@@ -42,7 +42,7 @@ After reviewing we get back to you with the ClientID and the scope that you shou
 
 ### Building your app ###
 
-Follow this article to retrieve an access token and Refresh Token to validate if the provided information is correct. After validation you can use Oauth 2.0 specifications to implement it in your own application. Make sure you utelize the refresh token. see for more details:  [article](https://vmsdurano.com/requesting-access-token-from-azure-b2c-with-pkce-using-postman/)
+Follow the steps below to retrieve an access token and Refresh Token to validate if the provided information is correct. After validation you can use Oauth 2.0 specifications to implement it in your own application.
 
 Endpoints:
 1. Authorize Url - This is the endpoint to initiate an authorization for the  Upload API: https://gpsspeedsurfingb2c.b2clogin.com/gpsspeedsurfingb2c.onmicrosoft.com/oauth2/v2.0/authorize?p=B2C_1_signin
