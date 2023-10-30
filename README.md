@@ -97,8 +97,8 @@ Gp3s API platform is based on OAuth 2.0 protocol. The process consists of 4 part
 
 1. Enable track upload on behalf of the user (once)
    - to be able to upload tracks on behalf of the user, we need to get the users concent to do this. In flow 2 we do this only once and therefore you collect and store the attributes which are needed when you upload tracks.
-     - call the registration api
-     - the user needs to login with the GP3S credentials
+     - you have to call the registration api from your user facing app or website
+     - the user of your app needs to login with the GP3S credentials
      - the flow will return an access token with the user-emails and user oid claims
      - store this information in your app in a secure way
 2. Get an access token 
@@ -112,7 +112,12 @@ Gp3s API platform is based on OAuth 2.0 protocol. The process consists of 4 part
      - call the de-registration api
      - the user needs to login with the GP3S credentials
      - delete the GP3S information for this user
-       
+
+Yoe need 2 app registrations:
+- app registration for Front-end app that supports step 1 and 4
+- app registration for back-end worker that support step 2 and 3
+When developing this integration start with step 2 and 3 and when succesfull complete step 1 and 4.
+ 
 ## Information provided to get  startedwith Authentication ##
 
 ### Information needed ###
@@ -121,25 +126,30 @@ Please sent us a request with detailed info to begin the API request reviewing p
 
 1. Company Name
 2. Company URL
-3. Application Name
+3. Application Name for the backend worker + app name for front end 
 4. Application Logo (200 px by 200 px)
 5. Application Description (Limit 100 characters)
-6. Authorized Callback Domain (redirect_uri), provide one or more
+6. Authorized Callback Domain (redirect_uri), for front-end app, provide one or more
 
 ### You will get back ###
 
 After reviewing we get back to you with the ClientID and the scope that you should use in your application to call the API. This information will be  limited to the explicit use of the upload api for tracks.
 
-1. ClientId: The Client Id of your Client application registered in Gp3s App Registrations. This is typically a GUID value.
-2. Secret: The secret for your client application (store this in a safe place), the secret is rolledover between fixed time windows
-3. Scope: The scope configured by us for your Client application.
+Front-end app:
+1. ClientId: The Client Id's of your Client applications registered in Gp3s App Registrations. This is typically a GUID value.
+2. Access Token url: a url to call to get a new access token
+3. Authorized Callback Domain (redirect_uri)
+
+Back-end app:
+1. ClientId: The Client Id's of your Client application registered in Gp3s App Registrations. This is typically a GUID value.
+2. Secret: The secret for your back-end client application (store this in a safe place), the secret is rolledover between fixed time windows
+3. Scope: The scope configured by us for your Client applications.
 4. ScopeURI: The scope uri like https://gpsspeedsurfingb2c.onmicrosoft.com/<guid>/.default
 5. Access Token url: a url to call to get a new access token
-6. Authorized Callback Domain (redirect_uri)
 
 ## Step 1: Enable track upload on behalf of the user for flow 2 ##
 
-To be able to upload tracks on behalf of the user, we need to get the users concent to do this. In flow 2 we do this only once and therefore you have to collect and store the attributes in your backend or app which are needed when you upload tracks.
+To be able to upload tracks on behalf of the user, we need to get the users concent to do this. In flow 2 we do this only once and therefore you have to collect and store the attributes in your backend or app which are needed when you upload tracks. Use the information provided for the Front-end app. 
 
 ```html
 GET https://gpsspeedsurfingb2c.b2clogin.com/gpsspeedsurfingb2c.onmicrosoft.com/oauth2/v2.0/authorize?p=B2C_1_signin
@@ -162,6 +172,8 @@ extract the claims from the access token and store these: "oid" and "emails"
 
 
 ## Step 2: Get an access token for flow 2 ##
+
+Use the information provided for the Back-end app. 
 
 The access tokens are valid for 24 hours and after 24 hours you have to request a new one
 
