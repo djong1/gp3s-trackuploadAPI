@@ -247,3 +247,8 @@ curl --location --request POST '<https://apimgp3s.azure-api.net/track-upload-ccf
 ```
 you can do all actions via postman or other tool of your choice
 
+or via postman:
+
+![postman get token](https://gp3scdnstorage.blob.core.windows.net/gp3s/cdn/img/postman-ccf-3-uploadtrack2.png)
+
+![postman get token](https://gp3scdnstorage.blob.core.windows.net/gp3s/cdn/img/postman-ccf-3-uploadtrack3.png)
