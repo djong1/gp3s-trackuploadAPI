@@ -163,6 +163,13 @@ client_id=<1>
 &scope=<3>
 &response_type=code
 ```
+```html
+POST https://gpsspeedsurfingb2c.b2clogin.com/gpsspeedsurfingb2c.onmicrosoft.com/B2C_1_signin_kmsi/oauth2/v2.0/token
+grant_type:"authorization_code"
+Code:<code from previous call>
+&redirect_uri=<6>
+```
+
 or use Postman to get an access token:
 ![postman get token](https://gp3scdnstorage.blob.core.windows.net/gp3s/cdn/img/postman-get-accesstoken.png)
 Click "Get New Access Token", a browser popup will appear where you have to provide the gp3s user credentials, once completed the access token will return.
