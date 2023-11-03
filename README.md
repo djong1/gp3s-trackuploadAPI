@@ -113,12 +113,12 @@ Gp3s API platform is based on OAuth 2.0 protocol. The process consists of 4 part
      - the user needs to login with the GP3S credentials
      - delete the GP3S information for this user
 
-Yoe need 2 app registrations:
+Yoe need 2 app registrations for flow 2:
 - app registration for Front-end app that supports step 1 and 4
 - app registration for back-end worker that support step 2 and 3
 When developing this integration start with step 2 and 3 and when succesfull complete step 1 and 4.
  
-## Information provided to get  startedwith Authentication ##
+## Information provided to get started with Authentication flow 2 ##
 
 ### Information needed ###
 
