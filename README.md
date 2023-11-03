@@ -163,6 +163,8 @@ client_id=<1>
 &scope=<3>
 &response_type=code
 ```
+The second step is to post the authorization code received in return you get an access token
+
 ```html
 POST https://gpsspeedsurfingb2c.b2clogin.com/gpsspeedsurfingb2c.onmicrosoft.com/B2C_1_signin_kmsi/oauth2/v2.0/token
 grant_type:"authorization_code"
