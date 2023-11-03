@@ -143,13 +143,15 @@ Front-end app:
 Back-end app:
 1. ClientId: The Client Id's of your Client application registered in Gp3s App Registrations. This is typically a GUID value.
 2. Secret: The secret for your back-end client application (store this in a safe place), the secret is rolledover between fixed time windows
-3. Scope: The scope configured by us for your Client applications.
+3. Scope: The scope configured by us for your Client applications (do not add /.default for step 1, add /.default to the scope in step 2)
 4. ScopeURI: The scope uri like https://gpsspeedsurfingb2c.onmicrosoft.com/<guid>/.default
 5. Access Token url: a url to call to get a new access token
 
 ## Step 1: Enable track upload on behalf of the user for flow 2 ##
 
 To be able to upload tracks on behalf of the user, we need to get the users concent to do this. In flow 2 we do this only once and therefore you have to collect and store the attributes in your backend or app which are needed when you upload tracks. Use the information provided for the Front-end app. 
+
+see: [documentation](https://learn.microsoft.com/en-us/azure/active-directory-b2c/authorization-code-flow#1-get-an-authorization-code)
 
 ```html
 GET https://gpsspeedsurfingb2c.b2clogin.com/gpsspeedsurfingb2c.onmicrosoft.com/oauth2/v2.0/authorize?p=B2C_1_signin
