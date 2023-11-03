@@ -168,7 +168,7 @@ or use Postman to get an access token:
 Click "Get New Access Token", a browser popup will appear where you have to provide the gp3s user credentials, once completed the access token will return.
 You can now use the access token to upload a track.
 
-extract the claims from the access token and store these: "oid" and "emails"
+extract the claims from the access token and store these: "oid" and "emails", you can use jwt.ms for extracting the information from the bearer Token for try-out. You wil need this information in step 3.  
 
 
 ## Step 2: Get an access token for flow 2 ##
