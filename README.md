@@ -210,6 +210,9 @@ curl --location --request POST '<5>' \
 --form 'client_secret="<2>"' \
 --form 'scope="<4>"'
 ```
+or via postman:
+
+![postman get token](https://gp3scdnstorage.blob.core.windows.net/gp3s/cdn/img/postman-ccf-2-accestoken.png)
 
 ## Step 3: Calling the Track Upload API for flow 2 ##
 
