@@ -251,4 +251,4 @@ or via postman:
 
 ![postman get token](https://gp3scdnstorage.blob.core.windows.net/gp3s/cdn/img/postman-ccf-3-uploadtrack2.png)
 
-![postman get token](https://gp3scdnstorage.blob.core.windows.net/gp3s/cdn/img/postman-ccf-3-uploadtrack3.png)
+![postman get token](https://gp3scdnstorage.blob.core.windows.net/gp3s/cdn/img/postman-ccf-2-uploadtrack2.png)
