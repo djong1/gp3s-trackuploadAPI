@@ -255,6 +255,7 @@ curl --location --request POST '<https://apimgp3s.azure-api.net/track-upload-ccf
 --form 'userobjectid="<1234>"'
 --form 'useremail="<test@test.com>"'
 --form 'sportstype=3'
+--form 'devicename="<applewatchultra>"'
 ```
 you can do all actions via postman or other tool of your choice
 
