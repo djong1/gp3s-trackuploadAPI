@@ -83,7 +83,10 @@ curl --location --request POST '<https://apimgp3s.azure-api.net/track-upload/upl
 --form 'file="<the actual file>"' \
 --form 'filetype="<gpx>"' \
 --form 'provider="<provider>"' \
---form 'sportstype=3'
+--form 'userobjectid="<1234>"' \
+--form 'useremail="<test@test.com>"' \
+--form 'sportstype=<1 to 9>' \
+--form 'devicename="<AppleWatchSeries8>"' \
 ```
 Call the API with the access token:
 ![postman get token](https://gp3scdnstorage.blob.core.windows.net/gp3s/cdn/img/postman-call-api.png)
@@ -252,10 +255,10 @@ curl --location --request POST '<https://apimgp3s.azure-api.net/track-upload-ccf
 --form 'file="<the actual file>"' \
 --form 'filetype="<gpx>"' \
 --form 'provider="<provider>"' \
---form 'userobjectid="<1234>"'
---form 'useremail="<test@test.com>"'
---form 'sportstype=3'
---form 'devicename="<applewatchultra>"'
+--form 'userobjectid="<1234>"' \
+--form 'useremail="<test@test.com>"' \
+--form 'sportstype=<1 to 9>' \
+--form 'devicename="<AppleWatchSeries8>"' \
 ```
 you can do all actions via postman or other tool of your choice
 
@@ -264,3 +267,13 @@ or via postman:
 ![postman get token](https://gp3scdnstorage.blob.core.windows.net/gp3s/cdn/img/postman-ccf-3-uploadtrack2.png)
 
 ![postman get token](https://gp3scdnstorage.blob.core.windows.net/gp3s/cdn/img/postman-ccf-2-uploadtrack2.png)
+
+
+# SportTypes:
+
+1	ice
+2	foil
+3	windsurf
+4	kitesurf
+5	sail
+6	wing
